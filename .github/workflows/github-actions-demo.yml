@@ -20,7 +20,5 @@ jobs:
         with:
           issue-number: 5
           body: |
-            https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ PR }}.diff
+            https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
           reactions: 'rocket'
-        env:
-          PR: ${{ steps.findPr.outputs.pr }}
