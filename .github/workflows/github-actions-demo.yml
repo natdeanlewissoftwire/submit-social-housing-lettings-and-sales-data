@@ -26,7 +26,7 @@ jobs:
         run: |
           curl https://api.openai.com/v1/completions \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer KEY" \
+            -H "Authorization: Bearer ${{ secrets.OPEN_AI_API_KEY }}" \
             -d '{
             "model": "text-davinci-003",
             "prompt": "Here is a pull request diff in Ruby:\nCODE\nGive me a sentence summarising what this diff does, and then write a few (no more than 5) bullet points explaining what this diff does in more detail. These bullet points should cover any major changes. Then find any possible bugs and suggest any improvements to the code if there are any obvious errors (otherwise write \"None\").\n\nUse the following template for your output:\n\nSummary: <summary sentence goes here>\n\nIn more detail: <bullet points go here>\n\nPossible bugs/suggested improvements: <possible bugs and suggested improvements go here>\n\n",
