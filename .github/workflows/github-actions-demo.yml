@@ -39,5 +39,4 @@ jobs:
         with:
           issue-number: ${{ steps.findPr.outputs.pr }}
           body: |
-            ${{ steps.gpt.outputs.response_text }}
             ${{ fromJson(steps.gpt.outputs.response).choices[0].text }}
