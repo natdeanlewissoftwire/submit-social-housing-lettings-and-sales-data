@@ -41,5 +41,6 @@ jobs:
           issue-number: ${{ steps.findPr.outputs.pr }}
           body: |
             ${{ steps.gpt.outputs.response_text }}
+            ${{ steps.gpt.outputs.response }}
 
           reactions: 'rocket'
