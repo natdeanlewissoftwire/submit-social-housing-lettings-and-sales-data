@@ -33,7 +33,7 @@ jobs:
           }')
           echo $response | jq
           choices=$(echo response | jq -r '.choices')
-          first_choice = $(echo choices | jq '.[0]')
+          first_choice=$(echo choices | jq '.[0]')
           response_text=$(echo first_choice | jq -r '.text')
           echo "response_text=$response_text" >> $GITHUB_OUTPUT
 
