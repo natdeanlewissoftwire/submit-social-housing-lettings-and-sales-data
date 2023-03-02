@@ -1,0 +1,42 @@
+name: GitHub Action
+run-name: Test action
+on: [push]
+permissions: write-all
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: getPr
+        uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+      - name: Call OpenAI API
+        id: gpt
+        run: |
+          url="https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff"
+          text=$(curl -s $url)
+          response=$(curl https://api.openai.com/v1/completions \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.OPEN_AI_API_KEY }}" \
+            -d '{
+            "model": "text-davinci-003",
+            "prompt": "Here is a pull request diff in Ruby:\n\"\"\"\n"${{ text }}"\n\"\"\"\nGive me a sentence summarising what this diff does, and then write a few (no more than 5) bullet points explaining what this diff does in more detail. These bullet points should cover any major changes. Then find any possible bugs and suggest any improvements to the code if there are any obvious errors (otherwise write \"None\").\n\nUse the following template for your output:\n\nSummary: <summary sentence goes here>\n\nIn more detail: <bullet points go here>\n\nPossible bugs/suggested improvements: <possible bugs and suggested improvements go here>",
+            "temperature": 0,
+            "max_tokens": 376,
+            "top_p": 1,
+            "frequency_penalty": 0,
+            "presence_penalty": 0,
+            "stop": ["\"\"\""]
+          }')
+          echo $response | jq
+          echo "response=$response" >> $GITHUB_OUTPUT
+      - uses: peter-evans/create-or-update-comment@v2.1.1
+        with:
+          issue-number: ${{ steps.findPr.outputs.pr }}
+          body: |
+            ${{ fromJson(steps.gpt.outputs.response).choices[0].text }}
+          reaction:
+            "rocket"
