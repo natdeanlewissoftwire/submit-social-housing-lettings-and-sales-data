@@ -38,8 +38,6 @@ jobs:
         with:
           issue-number: ${{ steps.findPr.outputs.pr }}
           body: |
-            name=$(echo $json_text | jq -r '.name')
-
             ${{ steps.gpt.outputs.response_text }}
 
           reactions: 'rocket'
