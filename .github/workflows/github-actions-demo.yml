@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Call OpenAI API
-        id: vars
+        id: gpt
         run: |
           response=$(curl https://api.openai.com/v1/completions \
             -H "Content-Type: application/json" \
