@@ -27,6 +27,7 @@ jobs:
             "stop": ["\"\"\""]
           }')
           echo $response | jq
+          test="test"
       - uses: jwalton/gh-find-current-pr@v1
         id: findPr
       - uses: peter-evans/create-or-update-comment@v2.1.1
@@ -34,5 +35,5 @@ jobs:
           issue-number: 5
           body: |
             https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
-            ${{ steps.gpt.outputs.response }}
+            ${{ steps.gpt.outputs.test }}
           reactions: 'rocket'
