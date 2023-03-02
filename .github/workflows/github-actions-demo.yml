@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Call OpenAI API
-        id: gpt
+        id: vars
         run: |
           response=$(curl https://api.openai.com/v1/completions \
             -H "Content-Type: application/json" \
@@ -27,6 +27,7 @@ jobs:
             "stop": ["\"\"\""]
           }')
           echo $response | jq
+          test="testtext"
       - uses: jwalton/gh-find-current-pr@v1
         id: findPr
       - uses: peter-evans/create-or-update-comment@v2.1.1
@@ -34,8 +35,5 @@ jobs:
           issue-number: 5
           body: |
             https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
-            ${{ steps.gpt.response }}
+            ${{ steps.gpt.test }}
           reactions: 'rocket'
-        -name: test
-        run: |
-          echo ${{ steps.gpt.response }} | jq
