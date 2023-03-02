@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: getPr
+        uses: jwalton/gh-find-current-pr@v1
+        id: findPr
       - name: Call OpenAI API
         id: gpt
         run: |
@@ -29,14 +32,12 @@ jobs:
           }')
           echo $response | jq
           echo "response=$response" >> $GITHUB_OUTPUT
-      - uses: jwalton/gh-find-current-pr@v1
-        id: findPr
+
       - uses: peter-evans/create-or-update-comment@v2.1.1
         with:
-          issue-number: 5
+          issue-number: ${{ steps.findPr.outputs.pr }}
           body: |
-
-            ${{ steps.gpt.outputs.response.choices.text }}
-            ${{ steps.gpt.outputs.response.choices.text }}
+            ${{ steps.gpt.outputs.response }}
+            ${{ steps.gpt.outputs.response.choices }}
             ${{ steps.findPr.outputs.pr }}
           reactions: 'rocket'
