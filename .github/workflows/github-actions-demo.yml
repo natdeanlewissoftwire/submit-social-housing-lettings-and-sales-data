@@ -38,3 +38,5 @@ jobs:
           issue-number: ${{ steps.findPr.outputs.pr }}
           body: |
             ${{ fromJson(steps.gpt.outputs.response).choices[0].text }}
+          reaction:
+            "rocket"
