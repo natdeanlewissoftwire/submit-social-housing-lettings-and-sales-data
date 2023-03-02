@@ -8,19 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: jwalton/gh-find-current-pr@v1
-        id: findPr
-      - uses: peter-evans/create-or-update-comment@v2.1.1
-        with:
-          issue-number: 5
-          body: |
-            https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
-            $response
-#          reactions: 'rocket'
-  openai_chatgpt:
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Call OpenAI API
@@ -39,3 +26,13 @@ jobs:
             "stop": ["\"\"\""]
           }')
           echo $response | jq
+      - uses: actions/checkout@v1
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+      - uses: peter-evans/create-or-update-comment@v2.1.1
+        with:
+          issue-number: 5
+          body: |
+            https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
+            $response
+#          reactions: 'rocket'
