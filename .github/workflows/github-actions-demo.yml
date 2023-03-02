@@ -16,7 +16,7 @@ jobs:
       - name: Call OpenAI API
         id: gpt
         run: |
-          text=$(curl -s https://patch-diff.githubusercontent.com/raw/natdeanlewissoftwire/submit-social-housing-lettings-and-sales-data/pull/5.diff)
+          text=$(curl -s https://patch-diff.githubusercontent.com/raw/natdeanlewissoftwire/submit-social-housing-lettings-and-sales-data/pull/${{ steps.findPr.outputs.pr }}.diff)
           response=$(curl https://api.openai.com/v1/completions \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.OPEN_AI_API_KEY }}" \
@@ -39,5 +39,5 @@ jobs:
           body: |
             ${{ steps.gpt.outputs.response }}
             ${{ steps.gpt.outputs.response.choices }}
-            ${{ steps.findPr.outputs.pr }}
+
           reactions: 'rocket'
