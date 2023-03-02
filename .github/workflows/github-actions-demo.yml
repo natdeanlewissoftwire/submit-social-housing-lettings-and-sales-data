@@ -11,6 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Call OpenAI API
+        id: gpt
         run: |
           response=$(curl https://api.openai.com/v1/completions \
             -H "Content-Type: application/json" \
@@ -33,5 +34,5 @@ jobs:
           issue-number: 5
           body: |
             https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
-            ${{ response }}
+            ${{ steps.gpt.response }}
 #          reactions: 'rocket'
