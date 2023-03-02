@@ -16,15 +16,14 @@ jobs:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
       # This will echo "Your PR is 7", or be skipped if there is no current PR.
-      - run: echo "Your PR is ${PR}"
-        if: success() && steps.findPr.outputs.number
-        env:
-          PR: ${{ steps.findPr.outputs.pr }}
-
-      - name: Create or Update Comment
-        uses: peter-evans/create-or-update-comment@v2.1.1
+      - uses: peter-evans/create-or-update-comment@v2.1.1
         with:
           issue-number: 5
           body: |
             https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${PR}.diff
           reactions: 'rocket'
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
+
+      - name: Create or Update Comment
+
