@@ -32,7 +32,9 @@ jobs:
             "stop": ["\"\"\""]
           }')
           echo $response | jq
-          echo "response_text=$response | jq -r '.choices.text' " >> $GITHUB_OUTPUT
+          choices=$(echo response | jq -r '.choices')
+          choices=$(echo choices | jq -r '.text')
+          echo "response_text=$response_text" >> $GITHUB_OUTPUT
 
       - uses: peter-evans/create-or-update-comment@v2.1.1
         with:
