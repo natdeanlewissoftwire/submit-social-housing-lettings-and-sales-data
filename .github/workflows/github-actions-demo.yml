@@ -24,6 +24,3 @@ jobs:
           reactions: 'rocket'
         env:
           PR: ${{ steps.findPr.outputs.pr }}
-
-      - name: Create or Update Comment
-
