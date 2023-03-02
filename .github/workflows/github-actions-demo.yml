@@ -34,6 +34,5 @@ jobs:
         with:
           issue-number: 5
           body: |
-            https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
-            ${{ steps.gpt.outputs.test }}
+            ${{ steps.gpt.outputs.response.choices.text }}
           reactions: 'rocket'
