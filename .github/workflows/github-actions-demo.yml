@@ -33,6 +33,5 @@ jobs:
       - uses: peter-evans/create-or-update-comment@v2.1.1
         with:
           issue-number: 5
-          body: |
-            ${{ steps.gpt.outputs.response.choices.text }}
+          body: ${{ steps.gpt.outputs.response.choices.text }}
           reactions: 'rocket'
