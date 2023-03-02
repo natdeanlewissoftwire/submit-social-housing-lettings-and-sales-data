@@ -27,7 +27,7 @@ jobs:
             "stop": ["\"\"\""]
           }')
           echo $response | jq
-          test="test"
+          echo "response=$response" >> $GITHUB_OUTPUT
       - uses: jwalton/gh-find-current-pr@v1
         id: findPr
       - uses: peter-evans/create-or-update-comment@v2.1.1
