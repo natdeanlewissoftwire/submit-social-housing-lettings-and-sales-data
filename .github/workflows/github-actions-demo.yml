@@ -33,14 +33,12 @@ jobs:
           }')
           echo $response | jq
           response_text=$(cat response | jq '.choices | .[0] | .text')
-          echo "response=$response" >> $GITHUB_OUTPUT
           echo "response_text=$response_text" >> $GITHUB_OUTPUT
 
       - uses: peter-evans/create-or-update-comment@v2.1.1
         with:
           issue-number: ${{ steps.findPr.outputs.pr }}
           body: |
-            ${{ steps.gpt.outputs.response_text }}
             ${{ fromJson(steps.gpt.outputs.response).choices[0].text }}
 
           reactions: 'rocket'
