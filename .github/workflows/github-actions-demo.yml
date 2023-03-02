@@ -22,3 +22,11 @@ jobs:
           body: |
             https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
           reactions: 'rocket'
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Call OpenAI API
+        uses: openai/github-action@v1.0.0
+        with:
+          api_key: "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"
+          prompt: "name my firstborn"
