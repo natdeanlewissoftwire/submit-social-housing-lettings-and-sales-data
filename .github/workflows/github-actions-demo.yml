@@ -22,7 +22,9 @@ jobs:
           body: |
             https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff
           reactions: 'rocket'
-
+  openai_chatgpt:
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Call OpenAI API
