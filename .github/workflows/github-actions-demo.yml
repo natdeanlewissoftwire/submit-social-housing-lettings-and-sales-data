@@ -16,7 +16,7 @@ jobs:
       - name: Call OpenAI API
         id: gpt
         run: |
-          text=$(curl -s https://patch-diff.githubusercontent.com/raw/${{ github.repository }}/pull/${{ steps.findPr.outputs.pr }}.diff | grep "<p>" | awk '{gsub("<[^>]*>", ""); print}')
+          text=$(curl -s https://patch-diff.githubusercontent.com/raw/natdeanlewissoftwire/submit-social-housing-lettings-and-sales-data/pull/5.diff)
           response=$(curl https://api.openai.com/v1/completions \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.OPEN_AI_API_KEY }}" \
